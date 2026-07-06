@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOSSEL — Comunicação Audiovisual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --forest:#1F3D2B;
+    --forest-deep:#132A1C;
+    --forest-soft:#2C5138;
+    --terracotta:#633822;
+    --terracotta-light:#8A5738;
+    --terracotta-glow:#B4835C;
+    --cream:#F5F1E8;
+    --cream-soft:#EDE4D3;
+    --ink:#20180F;
+    --line: rgba(245,241,232,0.16);
+    --shadow: 0 30px 60px -25px rgba(19,42,28,0.45);
+  }
+
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    font-weight:400;
+    overflow-x:hidden;
+    line-height:1.5;
+  }
+  img,svg{display:block;max-width:100%;}
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+  h1,h2,h3,h4{font-family:'Fraunces', serif;font-weight:600;line-height:1.05;letter-spacing:-0.01em;}
+  .eyebrow{
+    font-family:'Space Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    opacity:0.72;
+  }
+  .container{max-width:1240px;margin:0 auto;padding:0 clamp(24px,5vw,64px);}
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    padding:15px 30px;
+    border-radius:100px;
+    font-family:'Work Sans',sans-serif;
+    font-weight:600;
+    font-size:0.95rem;
+    border:1px solid transparent;
+    cursor:pointer;
+    transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease, background .3s ease, color .3s ease;
+    white-space:nowrap;
+  }
+  .btn:hover{transform:translateY(-3px);}
+  .btn-primary{background:var(--terracotta);color:var(--cream);box-shadow:0 14px 30px -12px rgba(99,56,34,0.55);}
+  .btn-primary:hover{background:var(--terracotta-light);}
+  .btn-outline{background:transparent;color:var(--cream);border-color:rgba(245,241,232,0.4);}
+  .btn-outline:hover{border-color:var(--cream);background:rgba(245,241,232,0.08);}
+  .btn-outline-dark{background:transparent;color:var(--forest);border-color:rgba(31,61,43,0.35);}
+  .btn-outline-dark:hover{border-color:var(--forest);background:rgba(31,61,43,0.06);}
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    padding:22px 0;
+    transition:padding .4s ease, background .4s ease, box-shadow .4s ease;
+  }
+  header .container{display:flex;align-items:center;justify-content:space-between;}
+  header.scrolled{
+    padding:12px 0;
+    background:rgba(31,61,43,0.92);
+    backdrop-filter:blur(10px);
+    box-shadow:0 10px 30px -18px rgba(0,0,0,0.5);
+  }
+  .logo{display:flex;align-items:center;gap:12px;}
+  .logo-mark{width:38px;height:38px;flex-shrink:0;}
+  .logo-text{font-family:'Fraunces',serif;font-weight:600;font-size:1.35rem;color:var(--cream);letter-spacing:0.02em;}
+  .logo-text span{color:var(--terracotta-glow);}
+  nav.main-nav{display:flex;align-items:center;gap:38px;}
+  nav.main-nav a{
+    color:var(--cream);font-size:0.92rem;font-weight:500;opacity:0.85;
+    position:relative;padding-bottom:4px;
+  }
+  nav.main-nav a::after{
+    content:'';position:absolute;left:0;bottom:0;height:1px;width:0;
+    background:var(--terracotta-glow);transition:width .3s ease;
+  }
+  nav.main-nav a:hover{opacity:1;}
+  nav.main-nav a:hover::after{width:100%;}
+  .header-actions{display:flex;align-items:center;gap:16px;}
+  .header-contact{
+    color:var(--cream);font-family:'Space Mono',monospace;font-size:0.82rem;opacity:0.9;
+  }
+  .burger{display:none;width:26px;height:20px;position:relative;cursor:pointer;background:none;border:none;}
+  .burger span{position:absolute;left:0;width:100%;height:2px;background:var(--cream);border-radius:2px;transition:.3s ease;}
+  .burger span:nth-child(1){top:0;}
+  .burger span:nth-child(2){top:9px;}
+  .burger span:nth-child(3){top:18px;}
+  .burger.open span:nth-child(1){transform:translateY(9px) rotate(45deg);}
+  .burger.open span:nth-child(2){opacity:0;}
+  .burger.open span:nth-child(3){transform:translateY(-9px) rotate(-45deg);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;align-items:center;
+    background:var(--forest);
+    overflow:hidden;
+    isolation:isolate;
+  }
+  .hero-layer{position:absolute;inset:0;will-change:transform;}
+  .hero-gradient{
+    background:radial-gradient(circle at 78% 18%, rgba(138,87,56,0.35), transparent 55%),
+               radial-gradient(circle at 12% 82%, rgba(180,131,92,0.18), transparent 50%),
+               linear-gradient(180deg, var(--forest) 0%, var(--forest-deep) 100%);
+    z-index:0;
+  }
+  .hero-grid{
+    z-index:1; opacity:0.35;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(circle at 60% 40%, black 10%, transparent 72%);
+  }
+  .hero-canopy{z-index:2;bottom:-2px;top:auto;height:42%;}
+  .hero-canopy svg{width:100%;height:100%;}
+  .hero-orbit{z-index:1;}
+  .orbit-ring{
+    position:absolute;border:1px solid rgba(245,241,232,0.14);border-radius:50%;
+  }
+  .orbit-ring.r1{width:520px;height:520px;top:8%;right:-140px;}
+  .orbit-ring.r2{width:340px;height:340px;top:32%;right:60px;}
+  .aperture-deco{position:absolute;top:20%;right:12%;width:120px;height:120px;opacity:0.5;z-index:1;}
+
+  .hero-content{position:relative;z-index:5;padding-top:70px;}
+  .hero-content .eyebrow{color:var(--terracotta-glow);margin-bottom:22px;display:flex;align-items:center;gap:12px;}
+  .hero-content .eyebrow::before{content:'';width:34px;height:1px;background:var(--terracotta-glow);display:inline-block;}
+  .hero h1{
+    color:var(--cream);
+    font-size:clamp(2.6rem,6vw,5.2rem);
+    max-width:15ch;
+  }
+  .hero h1 em{
+    font-style:italic;color:var(--terracotta-glow);
+  }
+  .hero-sub{
+    color:rgba(245,241,232,0.78);
+    font-size:1.08rem;
+    max-width:46ch;
+    margin:26px 0 40px;
+  }
+  .hero-actions{display:flex;gap:16px;flex-wrap:wrap;}
+  .hero-stats{
+    display:flex;gap:48px;margin-top:72px;flex-wrap:wrap;
+  }
+  .hero-stats div{border-left:1px solid rgba(245,241,232,0.25);padding-left:18px;}
+  .hero-stats strong{display:block;font-family:'Fraunces',serif;font-size:2rem;color:var(--cream);}
+  .hero-stats span{font-size:0.82rem;color:rgba(245,241,232,0.65);}
+
+  .scroll-cue{
+    position:absolute;bottom:34px;left:50%;transform:translateX(-50%);z-index:5;
+    display:flex;flex-direction:column;align-items:center;gap:10px;
+    color:rgba(245,241,232,0.6);font-family:'Space Mono',monospace;font-size:0.7rem;letter-spacing:0.18em;
+  }
+  .scroll-cue .line{width:1px;height:38px;background:rgba(245,241,232,0.4);position:relative;overflow:hidden;}
+  .scroll-cue .line::after{
+    content:'';position:absolute;top:-40%;left:0;width:100%;height:40%;background:var(--cream);
+    animation:scrollDown 1.8s ease-in-out infinite;
+  }
+  @keyframes scrollDown{0%{top:-40%;}100%{top:100%;}}
+
+  /* ---------- CANOPY DIVIDER (signature element) ---------- */
+  .canopy-divider{position:relative;line-height:0;}
+  .canopy-divider svg{width:100%;height:auto;display:block;}
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{position:relative;}
+  .section-pad{padding:130px 0;}
+  .section-head{max-width:640px;margin-bottom:70px;}
+  .section-head .eyebrow{color:var(--terracotta);margin-bottom:16px;}
+  .section-head h2{font-size:clamp(2rem,3.6vw,3rem);color:var(--forest);}
+  .section-head p{margin-top:20px;font-size:1.05rem;color:rgba(32,24,15,0.7);max-width:52ch;}
+  .light-on-dark .section-head h2{color:var(--cream);}
+  .light-on-dark .section-head p{color:rgba(245,241,232,0.72);}
+  .light-on-dark .section-head .eyebrow{color:var(--terracotta-glow);}
+
+  /* ---------- SERVICES ---------- */
+  .services{background:var(--cream);}
+  .service-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:2px;
+    background:rgba(31,61,43,0.12);
+    border:1px solid rgba(31,61,43,0.12);
+  }
+  .service-card{
+    background:var(--cream);
+    padding:44px 36px;
+    position:relative;
+    transition:background .4s ease, transform .4s ease;
+    reveal:true;
+  }
+  .service-card:hover{background:var(--forest);}
+  .service-card:hover .service-num,
+  .service-card:hover h3,
+  .service-card:hover p{color:var(--cream);}
+  .service-card:hover .service-icon svg *{stroke:var(--terracotta-glow);}
+  .service-card:hover .service-icon svg circle.fill-dot{fill:var(--terracotta-glow);}
+  .service-icon{width:52px;height:52px;margin-bottom:28px;}
+  .service-num{
+    position:absolute;top:36px;right:36px;
+    font-family:'Space Mono',monospace;font-size:0.78rem;color:rgba(31,61,43,0.35);
+    transition:color .4s ease;
+  }
+  .service-card h3{font-size:1.28rem;color:var(--forest);margin-bottom:14px;transition:color .4s ease;}
+  .service-card p{font-size:0.94rem;color:rgba(32,24,15,0.65);transition:color .4s ease;max-width:34ch;}
+
+  /* ---------- EVENT TYPES ---------- */
+  .events{background:var(--forest);color:var(--cream);}
+  .event-marquee{
+    overflow:hidden;position:relative;
+    padding:20px 0;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    margin-bottom:80px;
+  }
+  .marquee-track{
+    display:flex;gap:0;width:max-content;
+    animation:marquee 32s linear infinite;
+  }
+  .marquee-track span{
+    font-family:'Fraunces',serif;font-style:italic;font-weight:400;
+    font-size:1.5rem;color:rgba(245,241,232,0.85);
+    padding:0 34px;white-space:nowrap;display:flex;align-items:center;gap:34px;
+  }
+  .marquee-track span::after{content:'✦';font-style:normal;color:var(--terracotta-glow);font-size:0.9rem;}
+  @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  .mosaic{
+    display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:14px;
+  }
+  .mosaic-tile{
+    position:relative;border-radius:6px;overflow:hidden;
+    display:flex;align-items:flex-end;padding:22px;
+    background:linear-gradient(155deg,var(--forest-soft),var(--forest-deep));
+    isolation:isolate;
+  }
+  .mosaic-tile::before{
+    content:'';position:absolute;inset:0;
+    background-image:
+      radial-gradient(circle at 30% 20%, rgba(180,131,92,0.35), transparent 55%),
+      repeating-linear-gradient(115deg, rgba(245,241,232,0.05) 0 2px, transparent 2px 30px);
+    opacity:0.9;
+  }
+  .mosaic-tile .tile-icon{position:absolute;top:22px;right:22px;width:26px;height:26px;opacity:0.7;z-index:2;}
+  .mosaic-tile span{
+    position:relative;z-index:2;font-family:'Space Mono',monospace;font-size:0.78rem;
+    letter-spacing:0.06em;color:var(--cream);text-transform:uppercase;
+  }
+  .mosaic-tile.big{grid-column:span 2;grid-row:span 2;}
+  .mosaic-tile:hover{outline:1px solid rgba(245,241,232,0.4);}
+
+  /* ---------- PROCESS ---------- */
+  .process{background:var(--cream-soft);}
+  .process-list{display:flex;flex-direction:column;}
+  .process-item{
+    display:grid;grid-template-columns:120px 1fr;gap:32px;
+    padding:44px 0;border-top:1px solid rgba(31,61,43,0.18);
+    align-items:start;
+  }
+  .process-item:last-child{border-bottom:1px solid rgba(31,61,43,0.18);}
+  .process-index{font-family:'Fraunces',serif;font-size:3.2rem;color:var(--terracotta);opacity:0.85;}
+  .process-item h3{font-size:1.4rem;color:var(--forest);margin-bottom:10px;}
+  .process-item p{color:rgba(32,24,15,0.68);max-width:60ch;font-size:1rem;}
+
+  /* ---------- CTA BANNER ---------- */
+  .cta-banner{
+    background:var(--terracotta);
+    position:relative;overflow:hidden;
+    padding:110px 0;
+    text-align:center;
+  }
+  .cta-banner::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(circle at 20% 20%, rgba(245,241,232,0.12), transparent 55%),
+               radial-gradient(circle at 85% 80%, rgba(31,61,43,0.25), transparent 50%);
+  }
+  .cta-banner .container{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;}
+  .cta-banner h2{color:var(--cream);font-size:clamp(2rem,4.2vw,3.4rem);max-width:16ch;margin-bottom:28px;}
+  .cta-banner p{color:rgba(245,241,232,0.82);max-width:48ch;margin-bottom:40px;font-size:1.05rem;}
+  .cta-actions{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--forest-deep);color:var(--cream);padding:80px 0 26px;}
+  .footer-top{
+    display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;
+    padding-bottom:60px;border-bottom:1px solid var(--line);
+  }
+  .footer-brand .logo{margin-bottom:20px;}
+  .footer-brand p{color:rgba(245,241,232,0.6);max-width:32ch;font-size:0.94rem;}
+  .footer-col h4{
+    font-family:'Space Mono',monospace;font-size:0.75rem;letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--terracotta-glow);margin-bottom:20px;font-weight:400;
+  }
+  .footer-col ul li{margin-bottom:12px;}
+  .footer-col ul li a{color:rgba(245,241,232,0.75);font-size:0.94rem;transition:color .25s ease;}
+  .footer-col ul li a:hover{color:var(--cream);}
+  .footer-bottom{
+    display:flex;justify-content:space-between;align-items:center;padding-top:26px;
+    flex-wrap:wrap;gap:12px;
+  }
+  .footer-bottom p{font-size:0.8rem;color:rgba(245,241,232,0.45);}
+  .footer-contact-pill{
+    font-family:'Space Mono',monospace;font-size:0.78rem;color:rgba(245,241,232,0.55);
+  }
+
+  /* ---------- REVEAL ANIM ---------- */
+  [data-reveal]{opacity:0;transform:translateY(28px);transition:opacity .8s ease, transform .8s cubic-bezier(.2,.7,.2,1);}
+  [data-reveal].is-visible{opacity:1;transform:translateY(0);}
+
+  @media(prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    [data-reveal]{opacity:1;transform:none;transition:none;}
+    .marquee-track{animation:none;}
+    .scroll-cue .line::after{animation:none;}
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media(max-width:980px){
+    .service-grid{grid-template-columns:repeat(2,1fr);}
+    .mosaic{grid-template-columns:repeat(2,1fr);}
+    .mosaic-tile.big{grid-column:span 2;grid-row:span 1;}
+    .footer-top{grid-template-columns:1fr 1fr;}
+  }
+  @media(max-width:760px){
+    nav.main-nav{
+      position:fixed;top:0;right:0;height:100vh;width:78vw;max-width:320px;
+      background:var(--forest-deep);
+      flex-direction:column;justify-content:center;align-items:flex-start;
+      gap:28px;padding:0 40px;
+      transform:translateX(100%);transition:transform .45s cubic-bezier(.2,.8,.2,1);
+      z-index:90;
+    }
+    nav.main-nav.open{transform:translateX(0);}
+    .header-contact{display:none;}
+    .burger{display:block;}
+    .hero-stats{gap:30px;}
+    .process-item{grid-template-columns:1fr;gap:10px;}
+    .footer-top{grid-template-columns:1fr;gap:36px;}
+    .footer-bottom{flex-direction:column;align-items:flex-start;}
+    .section-pad{padding:90px 0;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header id="siteHeader">
+  <div class="container">
+    <a href="#top" class="logo" aria-label="DOSSEL — início">
+      <svg class="logo-mark" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="24" cy="24" r="21" stroke="#F5F1E8" stroke-width="1.4" opacity="0.5"/>
+        <path d="M24 6 L30 22 L46 24 L30 26 L24 42 L18 26 L2 24 L18 22 Z" fill="#B4835C" opacity="0.9"/>
+        <circle cx="24" cy="24" r="5.5" fill="#1F3D2B" stroke="#F5F1E8" stroke-width="1.2"/>
+      </svg>
+      <span class="logo-text">DOSSEL<span>.</span></span>
+    </a>
+
+    <nav class="main-nav" id="mainNav">
+      <a href="#servicos">Serviços</a>
+      <a href="#momentos">Momentos</a>
+      <a href="#processo">Como funciona</a>
+      <a href="#contato">Contato</a>
+    </nav>
+
+    <div class="header-actions">
+      <span class="header-contact">(92) 9 9123-4567</span>
+      <a href="#contato" class="btn btn-primary" style="padding:12px 24px;font-size:0.85rem;">Fale com a gente</a>
+      <button class="burger" id="burgerBtn" aria-label="Abrir menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <div class="hero-layer hero-gradient" data-speed="0"></div>
+  <div class="hero-layer hero-grid" data-speed="0.15"></div>
+  <div class="hero-layer hero-orbit" data-speed="0.25">
+    <div class="orbit-ring r1"></div>
+    <div class="orbit-ring r2"></div>
+  </div>
+  <svg class="aperture-deco" data-speed="0.35" viewBox="0 0 100 100" fill="none">
+    <g stroke="#B4835C" stroke-width="1.1">
+      <circle cx="50" cy="50" r="46"/>
+      <circle cx="50" cy="50" r="34"/>
+      <path d="M50 4 L50 20 M50 80 L50 96 M4 50 L20 50 M80 50 L96 50 M17 17 L28 28 M72 72 L83 83 M17 83 L28 72 M72 28 L83 17" opacity="0.6"/>
+    </g>
+  </svg>
+
+  <div class="container hero-content">
+    <p class="eyebrow">Assessoria de comunicação &amp; conteúdo</p>
+    <h1>Sua história, contada <em>de todos os ângulos.</em></h1>
+    <p class="hero-sub">Captação audiovisual, edição, imagens aéreas com drone, gestão de redes sociais e tráfego pago — uma equipe só, cuidando de cada momento que merece ser lembrado.</p>
+    <div class="hero-actions">
+      <a href="#contato" class="btn btn-primary">Pedir um orçamento</a>
+      <a href="#servicos" class="btn btn-outline">Ver serviços ↓</a>
+    </div>
+    <div class="hero-stats">
+      <div><strong>360°</strong><span>chão + ar, em toda cobertura</span></div>
+      <div><strong>+8</strong><span>tipos de evento atendidos</span></div>
+      <div><strong>1</strong><span>equipe cuidando de tudo</span></div>
+    </div>
+  </div>
+
+  <div class="hero-layer hero-canopy" data-speed="-0.1">
+    <svg viewBox="0 0 1440 220" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 220 L0 140 Q40 90 80 130 Q110 60 150 120 Q190 70 230 130 Q270 50 310 125 Q350 90 390 135 Q430 60 470 128 Q510 80 550 132 Q590 55 630 126 Q670 95 710 134 Q750 60 790 128 Q830 85 870 130 Q910 55 950 125 Q990 92 1030 132 Q1070 62 1110 128 Q1150 88 1190 130 Q1230 58 1270 126 Q1310 95 1350 133 Q1390 70 1440 130 L1440 220 Z" fill="#F5F1E8"/>
+    </svg>
+  </div>
+
+  <div class="scroll-cue"><span>ROLE</span><div class="line"></div></div>
+</section>
+
+<!-- ================= SERVICES ================= -->
+<section class="services section-pad" id="servicos">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">O que fazemos</p>
+      <h2>Da captação no local à publicação na tela do seu cliente.</h2>
+      <p>Seis frentes que trabalham juntas — ou separadas, se for o que você precisa.</p>
+    </div>
+  </div>
+
+  <div class="service-grid">
+
+    <div class="service-card" data-reveal>
+      <span class="service-num">01</span>
+      <svg class="service-icon" viewBox="0 0 52 52" fill="none">
+        <rect x="6" y="16" width="34" height="24" rx="3" stroke="#633822" stroke-width="1.6"/>
+        <path d="M40 22 L48 17 V35 L40 30" stroke="#633822" stroke-width="1.6" stroke-linejoin="round"/>
+        <circle class="fill-dot" cx="23" cy="28" r="7" stroke="#633822" stroke-width="1.6" fill="none"/>
+        <circle cx="14" cy="20.5" r="1.4" fill="#633822"/>
+      </svg>
+      <h3>Captação audiovisual</h3>
+      <p>Presença no seu evento ou empresa com equipamento profissional, para registrar cada instante sem interferir no clima do momento.</p>
+    </div>
+
+    <div class="service-card" data-reveal>
+      <span class="service-num">02</span>
+      <svg class="service-icon" viewBox="0 0 52 52" fill="none">
+        <path d="M6 20 H46 M6 28 H32 M6 36 H38" stroke="#633822" stroke-width="1.6" stroke-linecap="round"/>
+        <rect x="14" y="14" width="8" height="8" rx="1.5" stroke="#633822" stroke-width="1.6"/>
+        <rect x="30" y="24" width="8" height="8" rx="1.5" stroke="#633822" stroke-width="1.6"/>
+      </svg>
+      <h3>Edição de vídeo &amp; foto</h3>
+      <p>Cor, ritmo, trilha e corte fino — transformamos horas de material bruto em uma peça que emociona do início ao fim.</p>
+    </div>
+
+    <div class="service-card" data-reveal>
+      <span class="service-num">03</span>
+      <svg class="service-icon" viewBox="0 0 52 52" fill="none">
+        <circle cx="26" cy="24" r="4" stroke="#633822" stroke-width="1.6"/>
+        <path d="M26 20 V8 M26 28 V40 M22 24 H8 M30 24 H44" stroke="#633822" stroke-width="1.6" stroke-linecap="round"/>
+        <circle cx="26" cy="8" r="2.6" fill="#633822"/>
+        <circle cx="26" cy="40" r="2.6" fill="#633822"/>
+        <circle cx="8" cy="24" r="2.6" fill="#633822"/>
+        <circle cx="44" cy="24" r="2.6" fill="#633822"/>
+      </svg>
+      <h3>Cobertura aérea com drone</h3>
+      <p>Sobrevoos autorizados que revelam a escala de um evento, obra ou empreendimento — o ângulo que só o céu entrega.</p>
+    </div>
+
+    <div class="service-card" data-reveal>
+      <span class="service-num">04</span>
+      <svg class="service-icon" viewBox="0 0 52 52" fill="none">
+        <rect x="16" y="6" width="20" height="40" rx="4" stroke="#633822" stroke-width="1.6"/>
+        <circle cx="26" cy="39" r="1.6" fill="#633822"/>
+        <path d="M21 15 H31" stroke="#633822" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <h3>Gestão de redes sociais</h3>
+      <p>Planejamento, produção e postagem — sua marca presente todos os dias, com identidade e consistência.</p>
+    </div>
+
+    <div class="service-card" data-reveal>
+      <span class="service-num">05</span>
+      <svg class="service-icon" viewBox="0 0 52 52" fill="none">
+        <path d="M6 40 L18 24 L27 32 L46 10" stroke="#633822" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M36 10 H46 V20" stroke="#633822" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <h3>Tráfego pago</h3>
+      <p>Campanhas segmentadas que colocam seu conteúdo na frente de quem importa — com metas claras e relatório aberto.</p>
+    </div>
+
+    <div class="service-card" data-reveal>
+      <span class="service-num">06</span>
+      <svg class="service-icon" viewBox="0 0 52 52" fill="none">
+        <rect x="8" y="10" width="36" height="30" rx="3" stroke="#633822" stroke-width="1.6"/>
+        <path d="M8 18 H44" stroke="#633822" stroke-width="1.6"/>
+        <path d="M17 10 V6 M35 10 V6" stroke="#633822" stroke-width="1.6" stroke-linecap="round"/>
+        <circle class="fill-dot" cx="26" cy="29" r="4" stroke="#633822" stroke-width="1.6" fill="none"/>
+      </svg>
+      <h3>Cobertura de eventos</h3>
+      <p>Aniversários, formaturas, casamentos, lançamentos e eventos corporativos — cada um com seu próprio roteiro de captação.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- canopy divider: cream -> forest -->
+<div class="canopy-divider">
+  <svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 0 L0 60 Q60 100 120 55 Q170 100 220 60 Q270 100 320 58 Q370 100 420 60 Q470 100 520 58 Q570 100 620 60 Q670 100 720 58 Q770 100 820 60 Q870 100 920 58 Q970 100 1020 60 Q1070 100 1120 58 Q1170 100 1220 60 Q1270 100 1320 58 Q1370 100 1440 60 L1440 0 Z" fill="#1F3D2B"/></svg>
+</div>
+
+<!-- ================= EVENT TYPES / MOMENTOS ================= -->
+<section class="events section-pad light-on-dark" id="momentos">
+  <div class="event-marquee">
+    <div class="marquee-track">
+      <span>Aniversários</span><span>Formaturas</span><span>Casamentos</span><span>Vídeos institucionais</span><span>Portfólio empresarial</span><span>Propagandas</span><span>Lançamentos</span><span>Eventos corporativos</span>
+      <span>Aniversários</span><span>Formaturas</span><span>Casamentos</span><span>Vídeos institucionais</span><span>Portfólio empresarial</span><span>Propagandas</span><span>Lançamentos</span><span>Eventos corporativos</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">Cobrimos qualquer momento</p>
+      <h2>Se o momento importa para alguém, importa para nós.</h2>
+      <p>Da festa mais íntima à campanha institucional mais ambiciosa, adaptamos a equipe e o equipamento ao tamanho do seu evento.</p>
+    </div>
+
+    <div class="mosaic">
+      <div class="mosaic-tile big" data-reveal>
+        <svg class="tile-icon" viewBox="0 0 24 24" fill="none"><path d="M12 2 L14 9 L21 9 L15.5 13 L17.5 20 L12 16 L6.5 20 L8.5 13 L3 9 L10 9 Z" stroke="#F5F1E8" stroke-width="1.2"/></svg>
+        <span>Casamentos</span>
+      </div>
+      <div class="mosaic-tile" data-reveal>
+        <svg class="tile-icon" viewBox="0 0 24 24" fill="none"><path d="M4 20 V10 L12 4 L20 10 V20" stroke="#F5F1E8" stroke-width="1.2"/></svg>
+        <span>Formaturas</span>
+      </div>
+      <div class="mosaic-tile" data-reveal>
+        <svg class="tile-icon" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="#F5F1E8" stroke-width="1.2"/><path d="M12 3 V7 M12 17 V21 M3 12 H7 M17 12 H21" stroke="#F5F1E8" stroke-width="1.2"/></svg>
+        <span>Aniversários</span>
+      </div>
+      <div class="mosaic-tile" data-reveal>
+        <svg class="tile-icon" viewBox="0 0 24 24" fill="none"><rect x="4" y="6" width="16" height="12" rx="2" stroke="#F5F1E8" stroke-width="1.2"/><path d="M8 6 V4 H16 V6" stroke="#F5F1E8" stroke-width="1.2"/></svg>
+        <span>Institucional</span>
+      </div>
+      <div class="mosaic-tile" data-reveal>
+        <svg class="tile-icon" viewBox="0 0 24 24" fill="none"><path d="M3 17 L9 9 L13 13 L21 4" stroke="#F5F1E8" stroke-width="1.2"/></svg>
+        <span>Propagandas</span>
+      </div>
+      <div class="mosaic-tile" data-reveal>
+        <svg class="tile-icon" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="14" rx="2" stroke="#F5F1E8" stroke-width="1.2"/><path d="M3 9 H21" stroke="#F5F1E8" stroke-width="1.2"/></svg>
+        <span>Portfólio empresarial</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROCESS ================= -->
+<section class="process section-pad" id="processo">
+  <div class="container">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">Como funciona</p>
+      <h2>Um processo, do chão ao ar, até a tela do seu público.</h2>
+    </div>
+
+    <div class="process-list">
+      <div class="process-item" data-reveal>
+        <span class="process-index">01</span>
+        <div><h3>Captação</h3><p>Chegamos antes, mapeamos os melhores ângulos e capturamos o essencial — em terra e, quando fizer sentido, no ar com drone.</p></div>
+      </div>
+      <div class="process-item" data-reveal>
+        <span class="process-index">02</span>
+        <div><h3>Edição</h3><p>Selecionamos, cortamos e lapidamos o material até sobrar só aquilo que realmente emociona ou comunica.</p></div>
+      </div>
+      <div class="process-item" data-reveal>
+        <span class="process-index">03</span>
+        <div><h3>Entrega &amp; distribuição</h3><p>Entregamos o material pronto e, se quiser, cuidamos também da publicação nas redes e do impulsionamento pago.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA BANNER ================= -->
+<section class="cta-banner" id="contato">
+  <div class="container">
+    <p class="eyebrow" style="color:rgba(245,241,232,0.8);margin-bottom:20px;" data-reveal>Vamos conversar</p>
+    <h2 data-reveal>Vamos contar a sua história?</h2>
+    <p data-reveal>Conta pra gente o tipo de evento ou projeto — respondemos com uma proposta sob medida em até 24h.</p>
+    <div class="cta-actions" data-reveal>
+      <a href="https://wa.me/5592991234567" class="btn" style="background:var(--forest);color:var(--cream);">Chamar no WhatsApp</a>
+      <a href="mailto:contato@dosselcomunicacao.com.br" class="btn btn-outline">Enviar e-mail</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#top" class="logo">
+          <svg class="logo-mark" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="21" stroke="#F5F1E8" stroke-width="1.4" opacity="0.5"/>
+            <path d="M24 6 L30 22 L46 24 L30 26 L24 42 L18 26 L2 24 L18 22 Z" fill="#B4835C" opacity="0.9"/>
+            <circle cx="24" cy="24" r="5.5" fill="#1F3D2B" stroke="#F5F1E8" stroke-width="1.2"/>
+          </svg>
+          <span class="logo-text">DOSSEL<span>.</span></span>
+        </a>
+        <p>Assessoria de comunicação audiovisual: do chão ao ar, do registro à publicação.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Serviços</h4>
+        <ul>
+          <li><a href="#servicos">Captação audiovisual</a></li>
+          <li><a href="#servicos">Edição de vídeo &amp; foto</a></li>
+          <li><a href="#servicos">Drone aéreo</a></li>
+          <li><a href="#servicos">Redes sociais</a></li>
+          <li><a href="#servicos">Tráfego pago</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Navegação</h4>
+        <ul>
+          <li><a href="#momentos">Momentos que cobrimos</a></li>
+          <li><a href="#processo">Como funciona</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <ul>
+          <li><a href="tel:+5592991234567">(92) 9 9123-4567</a></li>
+          <li><a href="mailto:contato@dosselcomunicacao.com.br">contato@dosselcomunicacao.com.br</a></li>
+          <li><a href="https://instagram.com" target="_blank" rel="noopener">@dosselcomunicacao</a></li>
+          <li><a href="#top">Manaus — AM</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 DOSSEL Comunicação. Todos os direitos reservados.</p>
+      <span class="footer-contact-pill">contato@dosselcomunicacao.com.br · (92) 9 9123-4567</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // header scroll state
+  const header = document.getElementById('siteHeader');
+  const onScrollHeader = () => {
+    if(window.scrollY > 40){ header.classList.add('scrolled'); }
+    else{ header.classList.remove('scrolled'); }
+  };
+  document.addEventListener('scroll', onScrollHeader, {passive:true});
+
+  // mobile nav
+  const burger = document.getElementById('burgerBtn');
+  const nav = document.getElementById('mainNav');
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    nav.classList.toggle('open');
+  });
+  nav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    burger.classList.remove('open'); nav.classList.remove('open');
+  }));
+
+  // parallax layers
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const parallaxEls = document.querySelectorAll('[data-speed]');
+  let ticking = false;
+  function updateParallax(){
+    const scrollY = window.scrollY;
+    parallaxEls.forEach(el => {
+      const speed = parseFloat(el.getAttribute('data-speed'));
+      el.style.transform = `translate3d(0, ${scrollY * speed}px, 0)`;
+    });
+    ticking = false;
+  }
+  function onScrollParallax(){
+    if(!ticking && !prefersReduced){
+      window.requestAnimationFrame(updateParallax);
+      ticking = true;
+    }
+  }
+  if(!prefersReduced){ document.addEventListener('scroll', onScrollParallax, {passive:true}); }
+
+  // reveal on scroll
+  const revealEls = document.querySelectorAll('[data-reveal]');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, {threshold:0.15});
+  revealEls.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
