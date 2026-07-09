@@ -122,22 +122,8 @@
                linear-gradient(180deg, var(--forest) 0%, var(--forest-deep) 100%);
     z-index:0;
   }
-  .hero-grid{
-    z-index:1; opacity:0.35;
-    background-image:
-      linear-gradient(var(--line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size:64px 64px;
-    mask-image:radial-gradient(circle at 60% 40%, black 10%, transparent 72%);
-  }
   .hero-canopy{z-index:2;bottom:-2px;top:auto;height:42%;}
   .hero-canopy svg{width:100%;height:100%;}
-  .hero-orbit{z-index:1;}
-  .orbit-ring{
-    position:absolute;border:1px solid rgba(245,241,232,0.14);border-radius:50%;
-  }
-  .orbit-ring.r1{width:520px;height:520px;top:8%;right:-140px;}
-  .orbit-ring.r2{width:340px;height:340px;top:32%;right:60px;}
   .aperture-deco{position:absolute;top:20%;right:12%;width:120px;height:120px;opacity:0.5;z-index:1;}
 
   .hero-content{position:relative;z-index:5;padding-top:70px;}
@@ -632,25 +618,11 @@
     <div class="orbit-ring r1"></div>
     <div class="orbit-ring r2"></div>
   </div>
-  <svg class="aperture-deco" data-speed="0.35" viewBox="0 0 100 100" fill="none">
-    <g stroke="#B4835C" stroke-width="1.1">
-      <circle cx="50" cy="50" r="46"/>
-      <circle cx="50" cy="50" r="34"/>
-      <path d="M50 4 L50 20 M50 80 L50 96 M4 50 L20 50 M80 50 L96 50 M17 17 L28 28 M72 72 L83 83 M17 83 L28 72 M72 28 L83 17" opacity="0.6"/>
-    </g>
-  </svg>
 
   <div class="container hero-content">
     <p class="eyebrow">Assessoria de Comunicação e Marketing</p>
     <h1>Sua marca em evidência, <em>com estratégia e criatividade.</em></h1>
     <p class="hero-sub">Produção audiovisual, gestão de redes sociais, tráfego pago e comunicação estratégica para fortalecer a presença da sua empresa.</p>
-    <div class="hero-actions">
-      <a href="#contato" class="btn btn-primary">Pedir um orçamento</a>
-      <a href="#servicos" class="btn btn-outline">Ver serviços ↓</a>
-    </div>
-    <div>
-      <br>
-    </div>
     
   </div>
 
@@ -724,16 +696,6 @@
       </svg>
       <h3>Assessoria de Comunicação</h3>
       <p>Estratégias personalizadas para fortalecer a imagem da sua marca, alinhar sua comunicação e criar conexões consistentes com o seu público.</p>
-    </div>
-
-    <div class="service-card" data-reveal>
-      <span class="service-num">06</span>
-      <svg class="service-icon" viewBox="0 0 52 52" fill="none">
-        <path d="M6 40 L18 24 L27 32 L46 10" stroke="#633822" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M36 10 H46 V20" stroke="#633822" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <h3>Tráfego pago</h3>
-      <p>Campanhas segmentadas que colocam seu conteúdo na frente de quem importa — com metas claras e relatório aberto.</p>
     </div>
 
   </div>
