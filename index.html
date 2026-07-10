@@ -33,7 +33,7 @@
     overflow-x:hidden;
     line-height:1.5;
   }
-  img,svg{display:block;max-width:100%;}
+  img,svg,video{display:block;max-width:100%;}
   a{color:inherit;text-decoration:none;}
   ul{list-style:none;}
   h1,h2,h3,h4{font-family:'Fraunces', serif;font-weight:600;line-height:1.05;letter-spacing:-0.01em;}
@@ -47,11 +47,11 @@
   .container{max-width:1240px;margin:0 auto;padding:0 clamp(24px,5vw,64px);}
   .btn{
     display:inline-flex;align-items:center;gap:10px;
-    padding:15px 30px;
+    padding:clamp(12px,3vw,15px) clamp(20px,5vw,30px);
     border-radius:100px;
     font-family:'Work Sans',sans-serif;
     font-weight:600;
-    font-size:0.95rem;
+    font-size:clamp(0.85rem,2.4vw,0.95rem);
     border:1px solid transparent;
     cursor:pointer;
     transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease, background .3s ease, color .3s ease;
@@ -71,16 +71,16 @@
     padding:22px 0;
     transition:padding .4s ease, background .4s ease, box-shadow .4s ease;
   }
-  header .container{display:flex;align-items:center;justify-content:space-between;}
+  header .container{display:flex;align-items:center;justify-content:space-between;gap:12px;}
   header.scrolled{
     padding:12px 0;
     background:rgba(31,61,43,0.92);
     backdrop-filter:blur(10px);
     box-shadow:0 10px 30px -18px rgba(0,0,0,0.5);
   }
-  .logo{display:flex;align-items:center;gap:12px;}
+  .logo{display:flex;align-items:center;gap:12px;min-width:0;}
   .logo-mark{width:38px;height:38px;flex-shrink:0;}
-  .logo-text{font-family:'Fraunces',serif;font-weight:600;font-size:1.35rem;color:var(--cream);letter-spacing:0.02em;}
+  .logo-text{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1rem,4.2vw,1.35rem);color:var(--cream);letter-spacing:0.02em;white-space:nowrap;}
   .logo-text span{color:var(--terracotta-glow);}
   nav.main-nav{display:flex;align-items:center;gap:38px;}
   nav.main-nav a{
@@ -93,7 +93,7 @@
   }
   nav.main-nav a:hover{opacity:1;}
   nav.main-nav a:hover::after{width:100%;}
-  .header-actions{display:flex;align-items:center;gap:16px;}
+  .header-actions{display:flex;align-items:center;gap:clamp(8px,3vw,16px);flex-shrink:0;}
   .header-contact{
     color:var(--cream);font-family:'Space Mono',monospace;font-size:0.82rem;opacity:0.9;
   }
@@ -110,6 +110,7 @@
   .hero{
     position:relative;
     min-height:100vh;
+    min-height:100svh;
     display:flex;align-items:center;
     background:var(--forest);
     overflow:hidden;
@@ -190,7 +191,6 @@
     padding:44px 36px;
     position:relative;
     transition:background .4s ease, transform .4s ease;
-    reveal:true;
   }
   .service-card:hover{background:var(--forest);}
   .service-card:hover .service-num,
@@ -221,7 +221,7 @@
   }
   .marquee-track span{
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
-    font-size:1.5rem;color:rgba(245,241,232,0.85);
+    font-size:clamp(1.05rem,4vw,1.5rem);color:rgba(245,241,232,0.85);
     padding:0 34px;white-space:nowrap;display:flex;align-items:center;gap:34px;
   }
   .marquee-track span::after{content:'✦';font-style:normal;color:var(--terracotta-glow);font-size:0.9rem;}
@@ -241,7 +241,7 @@
   }
   .mosaic-tile::before{
     content:'';position:absolute;inset:0;
-    background-image: none
+    background-image: none;
     opacity:0.9;
   }
   .mosaic-tile .tile-icon{position:absolute;top:22px;right:22px;width:26px;height:26px;opacity:0.7;z-index:2;}
@@ -261,7 +261,7 @@
     align-items:start;
   }
   .process-item:last-child{border-bottom:1px solid rgba(31,61,43,0.18);}
-  .process-index{font-family:'Fraunces',serif;font-size:3.2rem;color:var(--terracotta);opacity:0.85;}
+  .process-index{font-family:'Fraunces',serif;font-size:clamp(2.1rem,7vw,3.2rem);color:var(--terracotta);opacity:0.85;}
   .process-item h3{font-size:1.4rem;color:var(--forest);margin-bottom:10px;}
   .process-item p{color:rgba(32,24,15,0.68);max-width:60ch;font-size:1rem;}
 
@@ -524,7 +524,7 @@
   }
   .testimonial-card:hover{transform:translateY(-6px);box-shadow:var(--shadow);}
   .testimonial-quote-mark{
-    font-family:'Fraunces',serif;font-size:3.2rem;color:var(--terracotta-glow);
+    font-family:'Fraunces',serif;font-size:clamp(2.4rem,7vw,3.2rem);color:var(--terracotta-glow);
     line-height:1;margin-bottom:2px;opacity:0.85;
   }
   .testimonial-stars{display:flex;gap:4px;margin-bottom:18px;}
@@ -571,7 +571,9 @@
     nav.main-nav.open{transform:translateX(0);}
     .header-contact{display:none;}
     .burger{display:block;}
+    .hero-content{padding-top:56px;}
     .hero-stats{gap:30px;}
+    .hero-actions{gap:12px;}
     .process-item{grid-template-columns:1fr;gap:10px;}
     .testimonials-grid{grid-template-columns:1fr;}
     .logos-strip{gap:28px;padding-bottom:60px;margin-bottom:60px;}
@@ -580,6 +582,51 @@
     .footer-top{grid-template-columns:1fr;gap:36px;}
     .footer-bottom{flex-direction:column;align-items:flex-start;}
     .section-pad{padding:90px 0;}
+    .section-head{margin-bottom:48px;}
+    .cta-banner{padding:80px 0;}
+    .mosaic{grid-auto-rows:170px;gap:10px;}
+  }
+
+  /* celulares médios / grandes (ex: iPhone padrão, Android médio) */
+  @media(max-width:480px){
+    .container{padding:0 18px;}
+    .logo{gap:8px;}
+    .logo-mark{width:30px;height:30px;}
+    .service-card{padding:32px 24px;}
+    .service-icon{width:44px;height:44px;margin-bottom:20px;}
+    .service-num{top:24px;right:24px;}
+    .mosaic{grid-template-columns:1fr;grid-auto-rows:190px;gap:10px;}
+    .mosaic-tile.big{grid-column:span 1;grid-row:span 1;}
+    .event-marquee{margin-bottom:56px;}
+    .testimonial-card{padding:28px 22px;}
+    .logos-strip{gap:22px;padding-bottom:44px;margin-bottom:56px;}
+    .logo-item{height:30px;}
+    .showreel-item{flex:0 0 210px;height:280px;}
+    .showreel-caption{font-size:0.66rem;}
+    .cta-banner{padding:64px 0;}
+    .cta-actions{width:100%;flex-direction:column;}
+    .cta-actions .btn{width:100%;justify-content:center;}
+    .footer-bottom{gap:16px;}
+    .footer-contact-pill{font-size:0.7rem;word-break:break-word;}
+    .whatsapp-float{right:14px;bottom:14px;width:50px;height:50px;}
+    .whatsapp-float svg{width:24px;height:24px;}
+  }
+
+  /* celulares pequenos (ex: iPhone SE, Android compacto ≤360px) */
+  @media(max-width:380px){
+    .container{padding:0 14px;}
+    .logo-text{font-size:0.92rem;}
+    .header-actions{gap:6px;}
+    .hero-content .eyebrow{gap:8px;font-size:0.64rem;}
+    .hero h1{font-size:clamp(2rem,8vw,2.6rem);}
+    .hero-sub{font-size:0.96rem;margin:18px 0 28px;}
+    .section-head h2{font-size:clamp(1.6rem,7vw,2rem);}
+    .section-head p{font-size:0.94rem;}
+    .service-card h3{font-size:1.12rem;}
+    .service-card p{font-size:0.88rem;}
+    .process-item h3{font-size:1.2rem;}
+    .showreel-item{flex:0 0 180px;height:250px;}
+    nav.main-nav{width:84vw;padding:0 28px;gap:22px;}
   }
 </style>
 </head>
@@ -589,7 +636,7 @@
 <header id="siteHeader">
   <div class="container">
     <a href="#top" class="logo" aria-label="DOSSEL — início">
-      <img src="img/lc3.png" alt="LC" class="logo-mark">
+      <!--<img src="img/lc3.png" alt="LC" class="logo-mark">-->
       <span class="logo-text">LUME CREATIVE<span>.</span></span>
     </a>
 
@@ -604,7 +651,7 @@
 
     <div class="header-actions">
       <!--<span class="header-contact">(92) 9 9535-6563</span>-->
-      <a href="#contato" class="btn btn-primary" style="padding:12px 24px;font-size:0.85rem;">Fale com a gente</a>
+      <a href="#contato" class="btn btn-primary" style="padding:clamp(9px,2.4vw,12px) clamp(14px,4vw,24px);font-size:clamp(0.74rem,2.6vw,0.85rem);">Fale com a gente</a>
       <button class="burger" id="burgerBtn" aria-label="Abrir menu"></button>
     </div>
   </div>
@@ -897,7 +944,7 @@
         </div>
         <p class="testimonial-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when desi</p>
         <div class="testimonial-author">
-          <div class="testimonial-avatar"><img src="img/pessoal1.png" alt="Foto de Mariana Ferreira" onerror="this.remove();this.parentElement.textContent='MF';"></div>
+          <div class="testimonial-avatar"><img src="img/pessoal1.png" alt="Foto de Mariana Ferreira" onerror="this.parentElement.textContent='MF';this.remove();"></div>
           <div>
             <div class="testimonial-name">Jean Libório</div>
             <div class="testimonial-role">Diretora de Marketing</div>
@@ -916,7 +963,7 @@
         </div>
         <p class="testimonial-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when desi</p>
         <div class="testimonial-author">
-          <div class="testimonial-avatar"><img src="img/pessoal2.png" alt="Foto de Rafael Costa" onerror="this.remove();this.parentElement.textContent='RC';"></div>
+          <div class="testimonial-avatar"><img src="img/pessoal2.png" alt="Foto de Rafael Costa" onerror="this.parentElement.textContent='RC';this.remove();"></div>
           <div>
             <div class="testimonial-name">Alexssandro Barbosa</div>
             <div class="testimonial-role">Sócio-fundador</div>
@@ -935,7 +982,7 @@
         </div>
         <p class="testimonial-text">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since 1966, when desi</p>
         <div class="testimonial-author">
-          <div class="testimonial-avatar"><img src="img/pessoal3.png" alt="Foto de Juliana Lima" onerror="this.remove();this.parentElement.textContent='JL';"></div>
+          <div class="testimonial-avatar"><img src="img/pessoal3.png" alt="Foto de Juliana Lima" onerror="this.parentElement.textContent='JL';this.remove();"></div>
           <div>
             <div class="testimonial-name">Wesley Rick</div>
             <div class="testimonial-role">Gerente de Comunicação</div>
