@@ -65,18 +65,34 @@
   .btn-outline-dark{background:transparent;color:var(--forest);border-color:rgba(31,61,43,0.35);}
   .btn-outline-dark:hover{border-color:var(--forest);background:rgba(31,61,43,0.06);}
 
-  /* ---------- HEADER ---------- */
+  /* ---------- HEADER -----++++++----- */
   header{
     position:fixed;top:0;left:0;right:0;z-index:100;
     padding:22px 0;
     transition:padding .4s ease, background .4s ease, box-shadow .4s ease;
   }
-  header .container{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  
+  /* Modificado para alinhar tudo estritamente no centro */
+  header .container{
+    display:flex;
+    align-items:center;
+    justify-content:center; /* Alinha horizontalmente no centro */
+    gap:12px;
+  }
+  
   header.scrolled{
     padding:12px 0;
     background:rgba(31,61,43,0.92);
     backdrop-filter:blur(10px);
     box-shadow:0 10px 30px -18px rgba(0,0,0,0.5);
+  }
+  .logo{
+    display:flex;
+    align-items:center;
+    justify-content:center; /* Garante centralização interna */
+    gap:12px;
+    min-width:0;
+    margin: 0 auto; /* Centralização extra de segurança */
   }
   .logo{display:flex;align-items:center;gap:12px;min-width:0;}
   .logo-mark{width:38px;height:38px;flex-shrink:0;}
