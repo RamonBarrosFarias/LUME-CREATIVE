@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <style>
   :root{
     --forest:#1F3D2B;
@@ -322,7 +323,7 @@
   .contact-form textarea{resize:vertical;min-height:120px;font-family:inherit;}
   .contact-form .btn{align-self:center;margin-top:6px;border:none;}
   .contact-form .btn:disabled{opacity:0.6;cursor:not-allowed;}
-  .form-honeypot{position:absolute;left:-9999px;opacity:0;pointer-events:none;}
+  .form-honeypot{display:none;}
   .form-feedback{
     text-align:center;font-size:0.9rem;margin-top:4px;min-height:22px;
   }
@@ -331,6 +332,52 @@
   @media(max-width:480px){
     .contact-form-wrap{margin-top:40px;padding-top:36px;}
   }
+
+  /* ---------- POP-UP DE CONFIRMAÇÃO DE ENVIO ---------- */
+  .modal-overlay{
+    position:fixed;inset:0;z-index:999;
+    background:rgba(31,61,43,0.72);
+    display:flex;align-items:center;justify-content:center;
+    padding:24px;
+    opacity:0;visibility:hidden;
+    transition:opacity .3s ease, visibility .3s ease;
+  }
+  .modal-overlay.is-open{opacity:1;visibility:visible;}
+  .modal-card{
+    position:relative;
+    background:var(--cream);
+    color:var(--ink);
+    border-radius:20px;
+    max-width:420px;width:100%;
+    padding:44px 36px 36px;
+    text-align:center;
+    transform:translateY(18px) scale(0.97);
+    transition:transform .35s cubic-bezier(.2,.8,.2,1);
+    box-shadow:0 30px 70px rgba(0,0,0,0.35);
+  }
+  .modal-overlay.is-open .modal-card{transform:translateY(0) scale(1);}
+  .modal-close{
+    position:absolute;top:16px;right:16px;
+    width:32px;height:32px;border-radius:50%;
+    border:none;background:rgba(31,61,43,0.08);
+    color:var(--ink);font-size:1.2rem;line-height:1;
+    cursor:pointer;display:flex;align-items:center;justify-content:center;
+    transition:background .2s ease;
+  }
+  .modal-close:hover{background:rgba(31,61,43,0.16);}
+  .modal-icon{
+    width:56px;height:56px;margin:0 auto 20px;border-radius:50%;
+    background:var(--forest);color:var(--cream);
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.6rem;
+  }
+  .modal-card h3{
+    font-family:'Fraunces',serif;font-size:1.5rem;margin-bottom:12px;
+  }
+  .modal-card p{
+    color:rgba(31,20,15,0.7);font-size:0.95rem;line-height:1.6;margin-bottom:28px;
+  }
+  .modal-card .btn{width:100%;justify-content:center;background:var(--forest);color:var(--cream);border:none;}
 
   /* ---------- FOOTER ---------- */
   footer{background:var(--forest-deep);color:var(--cream);padding:80px 0 26px;}
@@ -1049,19 +1096,22 @@
     <p class="eyebrow" style="color:rgba(245,241,232,0.8);margin-bottom:20px;" data-reveal>Vamos conversar</p>
     <h2 data-reveal>Sua marca merece uma comunicação à altura dos seus objetivos.</h2>
     <p data-reveal>Conte um pouco sobre o seu projeto e você receberá uma proposta personalizada para a sua necessidade.</p>
-    <!--<div class="cta-actions" data-reveal>
+    <div class="cta-actions" data-reveal>
       <a href="https://wa.me/5592995356563" class="btn" style="background:var(--forest);color:var(--cream);">Chamar no WhatsApp</a>
       <a href="mailto:lumecreativeassessoria@gmail.com" class="btn btn-outline">Enviar e-mail</a>
-    </div>-->
+    </div>
 
     <div class="contact-form-wrap" data-reveal>
       <form class="contact-form" id="contactForm">
         <!-- Chave de acesso do Web3Forms (gratuito) — troque pela sua, veja instruções no comentário abaixo -->
-        <input type="hidden" name="access_key" value="4aeb7941-e44d-4ec8-8483-0ba056880910">
+        <input type="hidden" name="access_key" value="COLOQUE_AQUI_SUA_ACCESS_KEY_DO_WEB3FORMS">
         <input type="hidden" name="from_name" value="Site Lume Creative">
         <input type="hidden" name="subject" value="Novo contato pelo site — Lume Creative">
         <!-- honeypot anti-spam: campo invisível, se um bot preencher isso o envio é descartado -->
-        <input type="text" name="botcheck" class="form-honeypot" tabindex="-1" autocomplete="off">
+        <input type="checkbox" name="botcheck" class="form-honeypot" tabindex="-1" autocomplete="off">
+        <!-- ↑ campo-armadilha invisível: bots que preenchem tudo acabam marcando-o; humanos nunca veem nem tocam nele -->
+        <!-- checkbox (em vez de campo de texto) porque gerenciadores de senha e autofill do navegador não costumam marcar checkboxes automaticamente -->
+
 
         <div class="form-row">
           <label for="contactEmail">Seu e-mail</label>
@@ -1089,6 +1139,17 @@
         <button type="submit" class="btn btn-primary" id="contactSubmitBtn">Enviar mensagem</button>
         <p class="form-feedback" id="contactFeedback"></p>
       </form>
+    </div>
+
+    <!-- pop-up exibido após o envio ser confirmado -->
+    <div class="modal-overlay" id="successModal" aria-hidden="true">
+      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="successModalTitle">
+        <button class="modal-close" id="modalCloseBtn" aria-label="Fechar">&times;</button>
+        <div class="modal-icon">✓</div>
+        <h3 id="successModalTitle">Mensagem enviada!</h3>
+        <p>Recebemos sua mensagem e em breve alguém da Lume Creative vai entrar em contato. Enviamos também uma confirmação para o seu e-mail.</p>
+        <button class="btn" id="modalOkBtn">Entendi</button>
+      </div>
     </div>
   </div>
 </section>
@@ -1315,6 +1376,34 @@
   revealEls.forEach(el => io.observe(el));
 
   // ---------- FORMULÁRIO DE CONTATO ("Vamos conversar") ----------
+
+  const EMAILJS_PUBLIC_KEY  = 'tUCI4Hvwuwc34B7M7';
+  const EMAILJS_SERVICE_ID  = 'service_erbmbd7';
+  const EMAILJS_TEMPLATE_ID = 'template_9vtuwue';
+
+  if(window.emailjs && EMAILJS_PUBLIC_KEY !== 'COLOQUE_AQUI_SUA_PUBLIC_KEY_DO_EMAILJS'){
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+  }
+
+  // --- pop-up de confirmação ---
+  const successModal = document.getElementById('successModal');
+  function openSuccessModal(){
+    successModal.classList.add('is-open');
+    successModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeSuccessModal(){
+    successModal.classList.remove('is-open');
+    successModal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('modalCloseBtn').addEventListener('click', closeSuccessModal);
+  document.getElementById('modalOkBtn').addEventListener('click', closeSuccessModal);
+  successModal.addEventListener('click', (e) => { if(e.target === successModal) closeSuccessModal(); });
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape' && successModal.classList.contains('is-open')) closeSuccessModal();
+  });
+
   const contactForm = document.getElementById('contactForm');
   if(contactForm){
     const submitBtn = document.getElementById('contactSubmitBtn');
@@ -1335,7 +1424,12 @@
       submitBtn.disabled = true;
       submitBtn.textContent = 'Enviando...';
 
+      const clientEmail = contactForm.email.value;
+      const assunto = contactForm.assunto.value;
+      const mensagem = contactForm.message.value;
+
       try{
+        // 1) envia o contato para a Lume Creative via Web3Forms
         const formData = new FormData(contactForm);
         const res = await fetch('https://api.web3forms.com/submit', {
           method: 'POST',
@@ -1345,9 +1439,17 @@
         const result = await res.json();
 
         if(result.success){
-          feedback.textContent = 'Mensagem enviada! Em breve entraremos em contato.';
-          feedback.classList.add('ok');
           contactForm.reset();
+          openSuccessModal();
+
+          // 2) envia a confirmação para o e-mail do cliente via EmailJS (não bloqueia o sucesso principal)
+          if(window.emailjs && EMAILJS_PUBLIC_KEY !== 'COLOQUE_AQUI_SUA_PUBLIC_KEY_DO_EMAILJS'){
+            emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+              to_email: clientEmail,
+              assunto: assunto,
+              mensagem: mensagem
+            }).catch(err => console.warn('EmailJS: confirmação ao cliente falhou', err));
+          }
         } else {
           feedback.textContent = 'Não foi possível enviar. Tente novamente ou use o WhatsApp/e-mail acima.';
           feedback.classList.add('err');
