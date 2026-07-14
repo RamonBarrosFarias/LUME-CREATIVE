@@ -19,7 +19,7 @@
     --terracotta:#633822;
     --terracotta-light:#8A5738;
     --terracotta-glow:#B4835C;
-    --cream:#f5e8e8;
+    --cream:#F5F1E8;
     --black:#000000;
     --cream-soft:#EDE4D3;
     --ink:#20180F;
@@ -72,37 +72,39 @@
   /* ---------- HEADER ---------- */
   header{
     position:fixed;top:0;left:0;right:0;z-index:100;
-    padding:22px 0;
-    transition:padding .4s ease, background .4s ease, box-shadow .4s ease;
+    padding:18px 0;
+    background:rgba(245,241,232,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(31,61,43,0.08);
+    transition:padding .4s ease, box-shadow .4s ease, border-color .4s ease;
   }
   header .container{display:flex;align-items:center;justify-content:center;position:relative;gap:12px;}
   header.scrolled{
     padding:12px 0;
-    background:rgba(31,61,43,0.92);
-    backdrop-filter:blur(10px);
-    box-shadow:0 10px 30px -18px rgba(0,0,0,0.5);
+    box-shadow:0 10px 30px -18px rgba(31,61,43,0.25);
+    border-color:rgba(31,61,43,0.14);
   }
   .logo{display:flex;align-items:center;gap:12px;min-width:0;}
   .logo-mark{width:38px;height:38px;flex-shrink:0;}
-  .logo-text{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1rem,4.2vw,1.35rem);color:var(--cream);letter-spacing:0.02em;white-space:nowrap;}
-  .logo-text span{color:var(--terracotta-glow);}
+  .logo-text{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(1rem,4.2vw,1.35rem);color:var(--forest);letter-spacing:0.02em;white-space:nowrap;}
+  .logo-text span{color:var(--terracotta);}
   nav.main-nav{display:flex;align-items:center;gap:38px;}
   nav.main-nav a{
-    color:var(--cream);font-size:0.92rem;font-weight:500;opacity:0.85;
+    color:var(--forest);font-size:0.92rem;font-weight:500;opacity:0.82;
     position:relative;padding-bottom:4px;
   }
   nav.main-nav a::after{
     content:'';position:absolute;left:0;bottom:0;height:1px;width:0;
-    background:var(--terracotta-glow);transition:width .3s ease;
+    background:var(--terracotta);transition:width .3s ease;
   }
-  nav.main-nav a:hover{opacity:1;}
+  nav.main-nav a:hover{opacity:1;color:var(--terracotta);}
   nav.main-nav a:hover::after{width:100%;}
   .header-actions{display:flex;align-items:center;gap:clamp(8px,3vw,16px);flex-shrink:0;position:absolute;right:0;top:50%;transform:translateY(-50%);}
   .header-contact{
-    color:var(--cream);font-family:'Space Mono',monospace;font-size:0.82rem;opacity:0.9;
+    color:var(--forest);font-family:'Space Mono',monospace;font-size:0.82rem;opacity:0.85;
   }
   .burger{display:none;width:26px;height:20px;position:relative;cursor:pointer;background:none;border:none;}
-  .burger span{position:absolute;left:0;width:100%;height:2px;background:var(--cream);border-radius:2px;transition:.3s ease;}
+  .burger span{position:absolute;left:0;width:100%;height:2px;background:var(--forest);border-radius:2px;transition:.3s ease;}
   .burger span:nth-child(1){top:0;}
   .burger span:nth-child(2){top:9px;}
   .burger span:nth-child(3){top:18px;}
@@ -116,58 +118,52 @@
     min-height:100vh;
     min-height:100svh;
     display:flex;align-items:center;
-    background:var(--forest);
+    background:var(--cream);
     overflow:hidden;
     isolation:isolate;
+    padding-top:90px;
   }
-  .hero-layer{position:absolute;inset:0;will-change:transform;}
-  .hero-gradient{
-    background:radial-gradient(circle at 78% 18%, rgba(138,87,56,0.35), transparent 55%),
-               radial-gradient(circle at 12% 82%, rgba(180,131,92,0.18), transparent 50%),
-               linear-gradient(180deg, var(--forest) 0%, var(--forest-deep) 100%);
-    z-index:0;
+  .hero-grid-layout{
+    display:grid;grid-template-columns:1.05fr 0.95fr;gap:clamp(32px,6vw,80px);
+    align-items:center;
   }
-  .hero-canopy{z-index:2;bottom:-2px;top:auto;height:42%;}
-  .hero-canopy svg{width:100%;height:100%;}
-  .aperture-deco{position:absolute;top:20%;right:12%;width:120px;height:120px;opacity:0.5;z-index:1;}
-
-  .hero-content{position:relative;z-index:5;padding-top:70px;display:flex;flex-direction:column;align-items:center;text-align:center;}
-  .hero-content .eyebrow{color:var(--terracotta-glow);margin-bottom:22px;display:flex;align-items:center;justify-content:center;gap:12px;}
-  .hero-content .eyebrow::before{content:'';width:34px;height:1px;background:var(--terracotta-glow);display:inline-block;}
+  .hero-content .eyebrow{color:var(--terracotta);margin-bottom:22px;display:flex;align-items:center;gap:12px;}
+  .hero-content .eyebrow::before{content:'';width:34px;height:1px;background:var(--terracotta);display:inline-block;}
   .hero h1{
-    color:var(--cream);
-    font-size:clamp(2.6rem,6vw,5.2rem);
-    max-width:15ch;
-    margin:0 auto;
+    color:var(--forest);
+    font-size:clamp(2.4rem,4.6vw,3.8rem);
+    max-width:14ch;
   }
   .hero h1 em{
-    font-style:italic;color:var(--terracotta-glow);
+    font-style:italic;color:var(--terracotta);
   }
   .hero-sub{
-    color:rgba(245,241,232,0.78);
+    color:rgba(32,24,15,0.72);
     font-size:1.08rem;
     max-width:46ch;
-    margin:26px auto 40px;
+    margin:24px 0 38px;
   }
-  .hero-actions{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;}
-  .hero-stats{
-    display:flex;gap:48px;margin-top:72px;flex-wrap:wrap;justify-content:center;
-  }
-  .hero-stats div{border-left:1px solid rgba(245,241,232,0.25);padding-left:18px;}
-  .hero-stats strong{display:block;font-family:'Fraunces',serif;font-size:2rem;color:var(--cream);}
-  .hero-stats span{font-size:0.82rem;color:rgba(245,241,232,0.65);}
+  .hero-actions{display:flex;gap:16px;flex-wrap:wrap;}
 
-  .scroll-cue{
-    position:absolute;bottom:34px;left:50%;transform:translateX(-50%);z-index:5;
-    display:flex;flex-direction:column;align-items:center;gap:10px;
-    color:rgba(245,241,232,0.6);font-family:'Space Mono',monospace;font-size:0.7rem;letter-spacing:0.18em;
+  .hero-visual{
+    position:relative;border-radius:16px;overflow:hidden;
+    aspect-ratio:4/5;isolation:isolate;
+    box-shadow:var(--shadow);
   }
-  .scroll-cue .line{width:1px;height:38px;background:rgba(245,241,232,0.4);position:relative;overflow:hidden;}
-  .scroll-cue .line::after{
-    content:'';position:absolute;top:-40%;left:0;width:100%;height:40%;background:var(--cream);
-    animation:scrollDown 1.8s ease-in-out infinite;
+  .hero-visual img{width:100%;height:100%;object-fit:cover;}
+  .hero-visual::after{
+    content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(150deg, rgba(31,61,43,0.12), transparent 55%);
   }
-  @keyframes scrollDown{0%{top:-40%;}100%{top:100%;}}
+  .hero-visual.fallback{
+    background:linear-gradient(155deg,var(--forest-soft),var(--forest-deep));
+  }
+  .hero-visual.fallback::before{
+    content:'';position:absolute;inset:0;z-index:0;
+    background-image:
+      radial-gradient(circle at 30% 20%, rgba(180,131,92,0.35), transparent 55%),
+      repeating-linear-gradient(115deg, rgba(245,241,232,0.05) 0 2px, transparent 2px 30px);
+  }
 
   /* ---------- CANOPY DIVIDER (signature element) ---------- */
   .canopy-divider{position:relative;line-height:0;}
@@ -195,29 +191,28 @@
     background:var(--cream);
     padding:44px 36px;
     position:relative;
-    transition:background .4s ease, transform .4s ease;
+    transition:background .35s ease, transform .35s ease;
   }
-  .service-card:hover{background:var(--forest);}
-  .service-card:hover .service-num,
-  .service-card:hover h3,
-  .service-card:hover p{color:var(--cream);}
-  .service-card:hover .service-icon svg *{stroke:var(--terracotta-glow);}
-  .service-card:hover .service-icon svg circle.fill-dot{fill:var(--terracotta-glow);}
-  .service-icon{width:52px;height:52px;margin-bottom:28px;}
+  .service-card:hover{background:var(--cream-soft);transform:translateY(-4px);}
+  .service-card:hover h3{color:var(--terracotta);}
+  .service-card:hover .service-icon [stroke]{stroke:var(--terracotta);}
+  .service-card:hover .service-icon [fill]:not([fill="none"]){fill:var(--terracotta);}
+  .service-icon{width:52px;height:52px;margin-bottom:28px;transition:transform .35s ease;}
+  .service-card:hover .service-icon{transform:translateY(-2px);}
   .service-num{
     position:absolute;top:36px;right:36px;
     font-family:'Space Mono',monospace;font-size:0.78rem;color:rgba(31,61,43,0.35);
-    transition:color .4s ease;
+    transition:color .35s ease;
   }
-  .service-card h3{font-size:1.28rem;color:var(--forest);margin-bottom:14px;transition:color .4s ease;}
-  .service-card p{font-size:0.94rem;color:rgba(32,24,15,0.65);transition:color .4s ease;max-width:34ch;}
+  .service-card h3{font-size:1.28rem;color:var(--forest);margin-bottom:14px;transition:color .35s ease;}
+  .service-card p{font-size:0.94rem;color:rgba(32,24,15,0.65);max-width:34ch;}
 
   /* ---------- EVENT TYPES ---------- */
-  .events{background:var(--forest);color:var(--cream);}
+  .events{background:var(--cream-soft);color:var(--forest);}
   .event-marquee{
     overflow:hidden;position:relative;
     padding:20px 0;
-    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    border-top:1px solid rgba(31,61,43,0.14);border-bottom:1px solid rgba(31,61,43,0.14);
     margin-bottom:80px;
   }
   .marquee-track{
@@ -226,10 +221,10 @@
   }
   .marquee-track span{
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
-    font-size:clamp(1.05rem,4vw,1.5rem);color:rgba(245,241,232,0.85);
+    font-size:clamp(1.05rem,4vw,1.5rem);color:var(--forest);
     padding:0 34px;white-space:nowrap;display:flex;align-items:center;gap:34px;
   }
-  .marquee-track span::after{content:'✦';font-style:normal;color:var(--terracotta-glow);font-size:0.9rem;}
+  .marquee-track span::after{content:'✦';font-style:normal;color:var(--terracotta);font-size:0.9rem;}
   @keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
   .mosaic{
@@ -656,11 +651,16 @@
       z-index:90;
     }
     nav.main-nav.open{transform:translateX(0);}
+    nav.main-nav a{color:var(--cream);opacity:0.9;}
+    nav.main-nav a:hover{color:var(--terracotta-glow);}
     .header-contact{display:none;}
     .burger{display:block;}
-    .hero-content{padding-top:56px;}
-    .hero-stats{gap:30px;}
-    .hero-actions{gap:12px;}
+    .hero{padding-top:100px;}
+    .hero-grid-layout{grid-template-columns:1fr;text-align:center;}
+    .hero-content .eyebrow{justify-content:center;}
+    .hero-sub{margin-left:auto;margin-right:auto;}
+    .hero-visual{aspect-ratio:4/3;order:-1;}
+    .hero-actions{gap:12px;justify-content:center;}
     .process-item{grid-template-columns:1fr;gap:10px;}
     .testimonials-grid{grid-template-columns:1fr;}
     .logos-strip{gap:28px;padding-bottom:60px;margin-bottom:60px;}
@@ -775,24 +775,20 @@
 
 <!-- ================= HERO ================= -->
 <section class="hero" id="top">
-  <div class="hero-layer hero-gradient" data-speed="0"></div>
-  <div class="hero-layer hero-grid" data-speed="0.15"></div>
-  <div class="hero-layer hero-orbit" data-speed="0.25">
-    <div class="orbit-ring r1"></div>
-    <div class="orbit-ring r2"></div>
-  </div>
-
-  <div class="container hero-content">
-    <p class="eyebrow">Assessoria de Comunicação e Marketing</p>
-    <h1>Sua marca em evidência, <em>com estratégia e criatividade.</em></h1>
-    <p class="hero-sub">Produção audiovisual, gestão de redes sociais, tráfego pago e comunicação estratégica para fortalecer a presença da sua empresa.</p>
-    <div class="hero-actions">
-      <a href="#contato" class="btn btn-primary">Fazer orçamento</a>
-  
+  <div class="container hero-grid-layout">
+    <div class="hero-content">
+      <p class="eyebrow">Assessoria de Comunicação e Marketing</p>
+      <h1>Sua marca em evidência, <em>com estratégia e criatividade.</em></h1>
+      <p class="hero-sub">Produção audiovisual, gestão de redes sociais, tráfego pago e comunicação estratégica para fortalecer a presença da sua empresa.</p>
+      <div class="hero-actions">
+        <a href="#contato" class="btn btn-primary">Fazer orçamento</a>
+        <a href="#servicos" class="btn btn-outline-dark">Conhecer serviços</a>
+      </div>
     </div>
-    <div><br></div>
+    <div class="hero-visual">
+      <img src="img/01.png" alt="Equipe Lume Creative em produção audiovisual" onerror="this.closest('.hero-visual').classList.add('fallback');this.remove();">
+    </div>
   </div>
-  <br>
 </section>
 
 <!-- ================= SERVICES ================= -->
@@ -810,10 +806,10 @@
     <div class="service-card" data-reveal>
       <span class="service-num">01</span>
       <svg class="service-icon" viewBox="0 0 52 52" fill="none">
-        <rect x="6" y="16" width="34" height="24" rx="3" stroke="#633822" stroke-width="1.6"/>
-        <path d="M40 22 L48 17 V35 L40 30" stroke="#633822" stroke-width="1.6" stroke-linejoin="round"/>
-        <circle class="fill-dot" cx="23" cy="28" r="7" stroke="#633822" stroke-width="1.6" fill="none"/>
-        <circle cx="14" cy="20.5" r="1.4" fill="#633822"/>
+        <rect x="6" y="16" width="34" height="24" rx="3" stroke="#1F3D2B" stroke-width="1.6"/>
+        <path d="M40 22 L48 17 V35 L40 30" stroke="#1F3D2B" stroke-width="1.6" stroke-linejoin="round"/>
+        <circle class="fill-dot" cx="23" cy="28" r="7" stroke="#1F3D2B" stroke-width="1.6" fill="none"/>
+        <circle cx="14" cy="20.5" r="1.4" fill="#1F3D2B"/>
       </svg>
       <h3>Gestão de Redes Sociais</h3>
       <p>Planejamento, produção de conteúdo, calendário editorial e acompanhamento estratégico para manter sua marca presente, consistente e relevante.</p>
@@ -822,9 +818,9 @@
     <div class="service-card" data-reveal>
       <span class="service-num">02</span>
       <svg class="service-icon" viewBox="0 0 52 52" fill="none">
-        <path d="M6 20 H46 M6 28 H32 M6 36 H38" stroke="#633822" stroke-width="1.6" stroke-linecap="round"/>
-        <rect x="14" y="14" width="8" height="8" rx="1.5" stroke="#633822" stroke-width="1.6"/>
-        <rect x="30" y="24" width="8" height="8" rx="1.5" stroke="#633822" stroke-width="1.6"/>
+        <path d="M6 20 H46 M6 28 H32 M6 36 H38" stroke="#1F3D2B" stroke-width="1.6" stroke-linecap="round"/>
+        <rect x="14" y="14" width="8" height="8" rx="1.5" stroke="#1F3D2B" stroke-width="1.6"/>
+        <rect x="30" y="24" width="8" height="8" rx="1.5" stroke="#1F3D2B" stroke-width="1.6"/>
       </svg>
       <h3>Produção Audiovisual</h3>
       <p>Produção de vídeos e fotografias profissionais para empresas, eventos e campanhas, com foco em qualidade, criatividade e resultados.</p>
@@ -833,12 +829,12 @@
     <div class="service-card" data-reveal>
       <span class="service-num">03</span>
       <svg class="service-icon" viewBox="0 0 52 52" fill="none">
-        <circle cx="26" cy="24" r="4" stroke="#633822" stroke-width="1.6"/>
-        <path d="M26 20 V8 M26 28 V40 M22 24 H8 M30 24 H44" stroke="#633822" stroke-width="1.6" stroke-linecap="round"/>
-        <circle cx="26" cy="8" r="2.6" fill="#633822"/>
-        <circle cx="26" cy="40" r="2.6" fill="#633822"/>
-        <circle cx="8" cy="24" r="2.6" fill="#633822"/>
-        <circle cx="44" cy="24" r="2.6" fill="#633822"/>
+        <circle cx="26" cy="24" r="4" stroke="#1F3D2B" stroke-width="1.6"/>
+        <path d="M26 20 V8 M26 28 V40 M22 24 H8 M30 24 H44" stroke="#1F3D2B" stroke-width="1.6" stroke-linecap="round"/>
+        <circle cx="26" cy="8" r="2.6" fill="#1F3D2B"/>
+        <circle cx="26" cy="40" r="2.6" fill="#1F3D2B"/>
+        <circle cx="8" cy="24" r="2.6" fill="#1F3D2B"/>
+        <circle cx="44" cy="24" r="2.6" fill="#1F3D2B"/>
       </svg>
       <h3>Captação Aérea com Drone</h3>
       <p>Imagens aéreas que valorizam eventos, empreendimentos e projetos, oferecendo novas perspectivas para a sua comunicação.</p>
@@ -847,9 +843,9 @@
     <div class="service-card" data-reveal>
       <span class="service-num">04</span>
       <svg class="service-icon" viewBox="0 0 52 52" fill="none">
-        <rect x="16" y="6" width="20" height="40" rx="4" stroke="#633822" stroke-width="1.6"/>
-        <circle cx="26" cy="39" r="1.6" fill="#633822"/>
-        <path d="M21 15 H31" stroke="#633822" stroke-width="1.6" stroke-linecap="round"/>
+        <rect x="16" y="6" width="20" height="40" rx="4" stroke="#1F3D2B" stroke-width="1.6"/>
+        <circle cx="26" cy="39" r="1.6" fill="#1F3D2B"/>
+        <path d="M21 15 H31" stroke="#1F3D2B" stroke-width="1.6" stroke-linecap="round"/>
       </svg>
       <h3>Tráfego Pago</h3>
       <p>Campanhas estratégicas para alcançar o público certo, aumentar a visibilidade da sua marca e potencializar seus resultados.</p>
@@ -858,8 +854,8 @@
     <div class="service-card" data-reveal>
       <span class="service-num">05</span>
       <svg class="service-icon" viewBox="0 0 52 52" fill="none">
-        <path d="M6 40 L18 24 L27 32 L46 10" stroke="#633822" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M36 10 H46 V20" stroke="#633822" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M6 40 L18 24 L27 32 L46 10" stroke="#1F3D2B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M36 10 H46 V20" stroke="#1F3D2B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       <h3>Assessoria de Comunicação</h3>
       <p>Estratégias personalizadas para fortalecer a imagem da sua marca, alinhar sua comunicação e criar conexões consistentes com o seu público.</p>
@@ -869,7 +865,7 @@
 </section>
 
 <!-- ================= TIPOS DE EVENTOS / MOMENTOS ================= -->
-<section class="events section-pad light-on-dark" id="momentos">
+<section class="events section-pad" id="momentos">
 
   <div class="container">
     <div class="section-head" data-reveal>
