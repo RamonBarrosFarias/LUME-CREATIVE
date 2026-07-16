@@ -423,7 +423,7 @@
     display:flex;justify-content:space-between;align-items:center;padding-top:26px;
     flex-wrap:wrap;gap:12px;
   }
-  .footer-bottom p{font-size:0.8rem;color:rgba(245,241,232,0.45);}
+  .footer-bottom p{font-size:0.8rem;color:rgba(245,241,232,0.62);}
   .footer-contact-pill{
     font-family:'Space Mono',monospace;font-size:0.78rem;color:rgba(245,241,232,0.55);
   }
@@ -597,7 +597,7 @@
     color:var(--cream);background:rgba(19,42,28,0.55);backdrop-filter:blur(4px);
     padding:5px 11px;border-radius:100px;text-transform:uppercase;
   }
-  .showreel-item[data-type="video"]{cursor:default;}
+  .showreel-item[data-type="video"]{cursor:pointer;}
 
   .showreel-arrow{
     position:absolute;top:50%;transform:translateY(-50%);
@@ -989,7 +989,7 @@
       </div>
       <div class="mosaic-tile" data-reveal style="background-image: url('img/03.png');">
         <svg class="tile-icon" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="#F5F1E8" stroke-width="1.2"/><path d="M12 3 V7 M12 17 V21 M3 12 H7 M17 12 H21" stroke="#F5F1E8" stroke-width="1.2"/></svg>
-        <span>CAMPANHAS PIBLICITÁRIAS</span>
+        <span>CAMPANHAS PUBLICITÁRIAS</span>
       </div>
       <div class="mosaic-tile" data-reveal style="background-image: url('img/04.png');">
         <svg class="tile-icon" viewBox="0 0 24 24" fill="none"><rect x="4" y="6" width="16" height="12" rx="2" stroke="#F5F1E8" stroke-width="1.2"/><path d="M8 6 V4 H16 V6" stroke="#F5F1E8" stroke-width="1.2"/></svg>
@@ -1279,7 +1279,7 @@
           <img src="img/lc2.png" alt="LC" class="logo-mark">
           <span class="logo-text">LUME CREATIVE<span>.</span></span>
         </a>
-        <p>Assessoria de comunicação audiovisual: do chão ao ar, do registro à publicação.</p>
+        <p>Assessoria de Comunicação e Marketing</p>
       </div>
 
       <div class="footer-col">
@@ -1308,9 +1308,9 @@
         <h4>Contato</h4>
         <ul>
           <li><a href="tel:+5592995356563">(92) 9 9535-6563</a></li>
-          <li><a href="lumecreativeassessoria@gmail.com">lumecreativeassessoria@gmail.com</a></li>
+          <li><a href="mailto:lumecreativeassessoria@gmail.com">lumecreativeassessoria@gmail.com</a></li>
           <li><a href="https://www.instagram.com/sou.lumecreative?igsh=cW5kcmxwMWoycDVi" target="_blank" rel="noopener">@sou.lumecreative</a></li>
-          <li><a href="#top">Manaus — AM</a></li>
+          <li><a href="#top">Manaus-AM</a></li>
         </ul>
       </div>
     </div>
@@ -1450,7 +1450,6 @@
   document.querySelectorAll('.showreel-item').forEach(item => {
     item.addEventListener('click', () => {
       if(dragged) return;
-      if(item.dataset.type === 'video') return; // vídeos só são vistos dentro da faixa, não abrem
       const media = item.querySelector('img, video');
       if(media) openLightbox(media);
     });
