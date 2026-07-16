@@ -15,6 +15,8 @@
 <meta property="og:image" content="https://lume-creative.vercel.app/img/property.png?V=2">
 <meta property="og:image:secure_url" content="https://lume-creative.vercel.app/img/property.png?V=2">
 <meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:locale" content="pt_BR">
 
 <!-- Twitter/X Card -->
@@ -316,6 +318,8 @@
     text-transform:uppercase;color:rgba(245,241,232,0.75);margin-bottom:8px;display:block;
   }
   .form-row{display:flex;flex-direction:column;}
+  .form-row-split{display:flex;gap:16px;flex-wrap:wrap;}
+  .form-row-split .form-row{flex:1 1 200px;}
   .contact-form input,
   .contact-form select,
   .contact-form textarea{
@@ -805,7 +809,7 @@
   html.is-loading{overflow:hidden;}
   #preloader{
     position:fixed;inset:0;z-index:10000;
-    background:var(--forest);
+    background:var(--cream);
     display:flex;align-items:center;justify-content:center;flex-direction:column;
     transition:opacity .7s ease, visibility .7s ease;
   }
@@ -817,7 +821,7 @@
   .preloader-text{
     margin-top:18px;
     font-family:'Fraunces',serif;font-style:italic;font-weight:400;
-    font-size:0.95rem;letter-spacing:0.04em;color:rgba(245,232,232,0.65);
+    font-size:0.95rem;letter-spacing:0.04em;color:rgba(32,24,15,0.65);
   }
   @keyframes preloaderPulse{
     0%,100%{transform:scale(1);opacity:1;}
@@ -1200,7 +1204,18 @@
         <input type="hidden" name="from_name" value="Site Lume Creative">
         <input type="hidden" name="subject" value="Novo contato pelo site — Lume Creative">
         <input type="checkbox" name="botcheck" class="form-honeypot" tabindex="-1" autocomplete="off">
-        
+
+        <div class="form-row-split">
+          <div class="form-row">
+            <label for="contactName">Nome completo</label>
+            <input type="text" id="contactName" name="name" placeholder="Seu nome completo" required>
+          </div>
+          <div class="form-row">
+            <label for="contactPhone">Contato (telefone/WhatsApp)</label>
+            <input type="tel" id="contactPhone" name="phone" placeholder="(92) 90000-0000" required>
+          </div>
+        </div>
+
         <div class="form-row">
           <label for="contactEmail">Seu e-mail</label>
           <input type="email" id="contactEmail" name="email" placeholder="voce@empresa.com" required>
