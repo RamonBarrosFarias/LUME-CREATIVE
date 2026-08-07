@@ -36,6 +36,7 @@
   :root{
     --forest:#1F3D2B;
     --forest-deep:#132A1C;
+    --forest-sun:#566b30;
     --forest-soft:#2C5138;
     --terracotta:#633822;
     --terracotta-light:#8A5738;
@@ -403,15 +404,17 @@
   .modal-card .btn{width:100%;justify-content:center;background:var(--forest);color:var(--cream);border:none;}
 
   /* ---------- FOOTER ---------- */
-  footer{background:var(--forest-deep);color:var(--cream);padding:80px 0 26px;}
+  footer{background:var(--forest-sun);color:var(--cream);padding:80px 0 26px;}
   .footer-top{
     display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;
     padding-bottom:60px;border-bottom:1px solid var(--line);
+    align-items:start;
   }
-  .footer-brand .logo{margin-bottom:20px;}
+  .footer-brand .logo{margin-bottom:20px;align-items:flex-start;}
   .footer-brand .logo-text{color:var(--cream);text-shadow:none;}
   .footer-brand .logo-text span{color:var(--terracotta-glow);}
   .footer-brand p{color:rgba(245,241,232,0.6);max-width:32ch;font-size:0.94rem;}
+  .logo-mark-footer{display:block;width:300;height:300px;margin-top:-50px;}
   .footer-col h4{
     font-family:'Space Mono',monospace;font-size:0.75rem;letter-spacing:0.14em;text-transform:uppercase;
     color:var(--terracotta-glow);margin-bottom:20px;font-weight:400;
@@ -771,6 +774,7 @@
     .container{padding:0 18px;}
     .logo{gap:8px;}
     .logo-mark{width:30px;height:30px;}
+    .logo-mark-footer{width:100px;height:100px;}
     .service-card{padding:32px 24px;}
     .service-icon{width:44px;height:44px;margin-bottom:20px;}
     .service-num{top:24px;right:24px;}
@@ -1023,7 +1027,7 @@
       <div class="showreel-track" id="showreelTrack">
 
         <div class="showreel-item" data-type="video">
-          <span class="showreel-type-badge">Vídeo</span>
+          
           <video src="https://0bjo0l6pm2is5olo.public.blob.vercel-storage.com/portfolio/01.mp4" poster="img/01.png" muted loop playsinline onerror="this.closest('.showreel-item').classList.add('fallback');this.remove();"></video>
           
           <div class="showreel-caption">
@@ -1033,7 +1037,7 @@
         </div>
 
         <div class="showreel-item" data-type="video">
-          <span class="showreel-type-badge">Vídeo</span>
+          
           <video src="https://0bjo0l6pm2is5olo.public.blob.vercel-storage.com/portfolio/02.mp4" poster="" muted loop playsinline onerror="this.closest('.showreel-item').classList.add('fallback');this.remove();"></video>
           
           <div class="showreel-caption">
@@ -1043,7 +1047,7 @@
         </div>
 
         <div class="showreel-item" data-type="video">
-          <span class="showreel-type-badge">Vídeo</span>
+          
           <video src="https://0bjo0l6pm2is5olo.public.blob.vercel-storage.com/portfolio/03.mp4" poster="img/03.png" muted loop playsinline onerror="this.closest('.showreel-item').classList.add('fallback');this.remove();"></video>
           <div class="showreel-caption">
             <svg viewBox="0 0 24 24" fill="none" stroke="#F5F1E8" stroke-width="1.4"><path d="M4 20v-10l8-6 8 6v10"/></svg>
@@ -1053,7 +1057,7 @@
 
 
         <div class="showreel-item" data-type="video">
-          <span class="showreel-type-badge">Vídeo</span>
+          
           <video src="https://0bjo0l6pm2is5olo.public.blob.vercel-storage.com/portfolio/04.mp4" poster="img/04.png" muted loop playsinline onerror="this.closest('.showreel-item').classList.add('fallback');this.remove();"></video>
           <div class="showreel-caption">
             <svg viewBox="0 0 24 24" fill="none" stroke="#F5F1E8" stroke-width="1.4"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg>
@@ -1062,7 +1066,7 @@
         </div>
 
         <div class="showreel-item" data-type="video">
-          <span class="showreel-type-badge">Vídeo</span>
+          
           <video src="https://0bjo0l6pm2is5olo.public.blob.vercel-storage.com/portfolio/05.mp4" poster="img/05.png" muted loop playsinline onerror="this.closest('.showreel-item').classList.add('fallback');this.remove();"></video>
           <div class="showreel-caption">
             <svg viewBox="0 0 24 24" fill="none" stroke="#F5F1E8" stroke-width="1.4"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg>
@@ -1071,7 +1075,7 @@
         </div>
 
         <div class="showreel-item" data-type="video">
-          <span class="showreel-type-badge">Vídeo</span>
+          
           <video src="https://0bjo0l6pm2is5olo.public.blob.vercel-storage.com/portfolio/06.mp4" poster="img/06.png" muted loop playsinline onerror="this.closest('.showreel-item').classList.add('fallback');this.remove();"></video>
           <div class="showreel-caption">
             <svg viewBox="0 0 24 24" fill="none" stroke="#F5F1E8" stroke-width="1.4"><path d="M3 17l6-8 4 4 8-9"/></svg>
@@ -1273,10 +1277,8 @@
     <div class="footer-top">
       <div class="footer-brand">
         <a href="#top" class="logo">
-          <img src="img/lc2.png" alt="LC" class="logo-mark">
-          <span class="logo-text">LUME CREATIVE<span>.</span></span>
+          <img src="img/lc2.png" alt="LC" class="logo-mark-footer">
         </a>
-        <p>Produção de conteúdo e gestão de redes sociais para marcas que querem se destacar no digital.</p>
       </div>
 
       <div class="footer-col">

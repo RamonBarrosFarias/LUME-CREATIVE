@@ -1,4 +1,4 @@
 .vercel
 .env*
 vid/*.mp4
-video/portfolio/*.mp4
+video/portfolio/*.mp4Get-Content .gitignore
